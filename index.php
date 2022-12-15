@@ -1,15 +1,38 @@
+<?php
+	require 'vendor/autoload.php';
+?>
+
+<!--Titik Koordinat Open Street Map-->
+<?php
+	$latitude = -0.305556;
+	$longtitude = 100.369164;
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tulus</title>
+
+	<!--CSS dan Javascript Leaflet JS-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+</head>
+<body>
+
+	
+	
+</body>
+</html>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
 		<title>Melodi</title>
-		<!-- Description, Keywords and Author -->
-		<meta name="description" content="Your description">
-		<meta name="keywords" content="Your,Keywords">
-		<meta name="author" content="HimanshuGupta">
-		
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
 		<!-- Styles -->
 		<!-- Bootstrap CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">	
@@ -21,12 +44,13 @@
 		<link href="css/font-awesome.min.css" rel="stylesheet">		
 		<!-- Custom CSS -->
 		<link href="css/style.css" rel="stylesheet">
-		<link href="css/style-color.css" rel="stylesheet">
-		
+		<link href="css/style-color.css" rel="stylesheet">		
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="img/logo/favicon.ico">
-	</head>
-	
+		<!--CSS dan Javascript Leaflet JS-->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+	</head>	
 	<body>
 		
 		<!-- modal for booking ticket form -->
@@ -325,20 +349,13 @@
 			</div>
 			<!--/ hero end -->
 			
-			<!-- promo -->
-			<div class="promo parallax-one pad">
-				<div class="container">
-					<!-- promo element -->
-					<div class="promo-element ">
+			<!-- Bagian Map -->
+				<div class="default-heading">
 						<!-- heading -->
-						<h3>Music An Art...</h3>
-						<!-- paragraph -->
-						<p>Music is an art form and cultural activity whose medium is sound organized in time. The common elements of music are <strong>pitch</strong>, <strong>rhythm</strong>, <strong>dynamics</strong> and the sonic qualities of <strong>timbre</strong> and <strong>texture</strong>.</p>
-						<!-- link -->
-						<a class="promo-link" href="#"><i class="fa fa-play-circle"></i></a>
+						<h2>Tulus' Birth Place</h2>
 					</div>
+				<div id="map" style="height:100vh; width:200vh; margin:0 auto">
 				</div>
-			</div>
 			<!--/ promo end -->
 			
 			<!-- featured abbum -->
@@ -1129,9 +1146,22 @@
 			<span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span> 
 			
 		</div>
-		
-		<!-- Javascript files -->
-		<!-- jQuery -->
+
+		<!--Script Untuk Open Street Map-->
+		<script>
+			var map = L.map('map').setView([<?=$latitude?>, <?=$longtitude?>], 16);
+			L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				maxZoom: 19,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			}).addTo(map);
+			var circle = L.circle([<?=$latitude?>, <?=$longtitude?>], {
+				color: 'blue',
+				fillColor: 'blue',
+				fillOpacity: 0.5,
+				radius: 400
+			}).addTo(map);
+		</script>
+		<!-- JQuery -->
 		<script src="js/jquery.js"></script>
 		<!-- Bootstrap JS -->
 		<script src="js/bootstrap.min.js"></script>
