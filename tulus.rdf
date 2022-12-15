@@ -23,9 +23,9 @@
     </owl:sameAs>
 
     <foaf:pastProject>
-        <foaf:Project rdf:about="">
-            <foaf:homepage rdf:resource=""/>
-            <foaf:name></foaf:name>
+        <foaf:Project rdf:about="https://dbpedia.org/page/Tulus_(album)">
+            <foaf:homepage rdf:resource="https://www.imdb.com/title/tt19119528/"/>
+            <foaf:name>Tulus : Labirin</foaf:name>
         <faof:Project>
     </foaf:pastProject>
   </foaf:Person>
