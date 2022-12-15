@@ -1,0 +1,32 @@
+<rdf:RDF 
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  
+  <foaf:profile rdf:about="http://localhost/TubesWS_kel5/tulus.rdf">
+    <rdfs:label>Tulus</rdfs:label>
+    <foaf:maker rdf:resource="http://localhost/TubesWS_kel5/"/>
+    <foaf:primaryTopic rdf:resource="http://localhost/TubesWS_kel5/"/>
+  </foaf:profile>
+  
+  <foaf:Person rdf:about="http://localhost/TubesWS_kel5/">
+    <foaf:title>Mr</foaf:title>
+    <foaf:givenName>Muhammad</foaf:givenName>
+    <foaf:familyName>Tulus</foaf:familyName>
+    <owl:sameAs>
+        <foaf:Person rdf:about="<http://dbpedia.org/resource/Tulus_(singer)>">
+            <rdfs:label>Tulus</rdfs:label>
+            <foaf:homepage rdf:resource="<http://dbpedia.org/resource/Tulus_(singer)>"/>
+        </foaf:Person>
+    </owl:sameAs>
+
+    <foaf:pastProject>
+        <foaf:Project rdf:about="">
+            <foaf:homepage rdf:resource=""/>
+            <foaf:name></foaf:name>
+        <faof:Project>
+    </foaf:pastProject>
+  </foaf:Person>
+</rdf:RDF>
