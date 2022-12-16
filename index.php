@@ -15,6 +15,27 @@
 	\EasyRdf\RdfNamespace::set('dbp', 'http://dbpedia.org/property/');
 	\EasyRdf\RdfNamespace::set('dc', 'http://purl.org/dc/elements/1.1/');
 	\EasyRDf\RdfNamespace::setDefault('og');
+
+	// Query Ambil Data dari DBPedia, Tinggal Tambahin aja Predikat ama Hasil yang Mau Diambil //
+	$query_dbpedia = "
+        SELECT * WHERE {
+        ?tulus rdfs:label 'Tulus (singer)'@en.
+		?tulus dbo:abstract ?description.
+        ?tulus dbo:birthName ?birthName.
+        ?tulus dbo:birthDate ?birthDate.
+        FILTER( LANG (?description) = 'en')
+    }";
+	$result_dbpedia = $sparql_dbpedia->query($query_dbpedia);
+	$dbpedia = [];
+	foreach ($result_dbpedia as $row)
+	{
+		$dbpedia = [
+			'description' => $row->description,
+			'birthName' => $row->birthName,
+			'birthDate' => $row->birthDate,
+		];
+		break;
+	}
 	
 	// Query Untuk Mengambil Koordinat Map //
 	$sparql_query_map = 'SELECT ?lat ?long ?name WHERE {
@@ -40,6 +61,8 @@
 	$latitude = $rdf_map['lat'];
 	$longtitude = $rdf_map['long'];
 	$name = $rdf_map['name'];
+	$birthname = $dbpedia['birthName'];
+	$birthdate = $dbpedia['birthDate']?>
 ?>
 
 <!DOCTYPE html>
@@ -210,7 +233,7 @@
 					<!-- hero content -->
 					<div class="hero-content ">
 						<!-- heading -->
-						<h2>Latest Album</h2>
+						<h2><?= $birthname ?></h2>
 						<hr>
 						<!-- paragraph -->
 						<p>We sing the best <strong class="theme-color">Songs</strong> and now we control the world best <strong class="theme-color">Music</strong>.</p>
