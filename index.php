@@ -1,32 +1,46 @@
 <?php
 	require 'vendor/autoload.php';
+	$sparql_endpoint = 'https://dbpedia.org/sparql';
+
+	// Jangan Lupa Buat Dataset Baru ya di Jena Fuseki, Nama Dataset-nya Tulus //
+	$sparql_dbpedia = new \EasyRdf\Sparql\Client($sparql_endpoint);
+	$sparql_jena = new \EasyRdf\Sparql\Client('http://localhost:3030/Tulus/query');
+
+	// Namespace //
+	\EasyRdf\RdfNamespace::set('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+	\EasyRdf\RdfNamespace::set('foaf', 'http://xmlns.com/foaf/0.1/');
+	\EasyRdf\RdfNamespace::set('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
+	\EasyRdf\RdfNamespace::set('owl', 'http://www.w3.org/2002/07/owl#');
+	\EasyRdf\RdfNamespace::set('geo', 'http://www.opengis.net/ont/geosparql#');
+	\EasyRdf\RdfNamespace::set('dbp', 'http://dbpedia.org/property/');
+	\EasyRdf\RdfNamespace::set('dc', 'http://purl.org/dc/elements/1.1/');
+	\EasyRDf\RdfNamespace::setDefault('og');
+	
+	// Query Untuk Mengambil Koordinat Map //
+	$sparql_query_map = 'SELECT ?lat ?long ?name WHERE {
+        ?subject geo:lat ?lat;
+        geo:long ?long;
+        dbp:officialName ?name.
+    }';
+
+	$result_rdf_map = $sparql_jena->query($sparql_query_map);
+	$rdf_map = [];
+	foreach ($result_rdf_map as $row)
+	{
+		$rdf_map = [
+			'lat' => $row->lat,
+			'long' => $row->long,
+			'name' => $row->name,
+		];
+	}
 ?>
 
 <!--Titik Koordinat Open Street Map-->
 <?php
-	$latitude = -0.305556;
-	$longtitude = 100.369164;
+	$latitude = $rdf_map['lat'];
+	$longtitude = $rdf_map['long'];
+	$name = $rdf_map['name'];
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Tulus</title>
-
-	<!--CSS dan Javascript Leaflet JS-->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
-	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-
-</head>
-<body>
-
-	
-	
-</body>
-</html>
 
 <!DOCTYPE html>
 <html>
@@ -350,13 +364,13 @@
 			<!--/ hero end -->
 			
 			<!-- Bagian Map -->
-				<div class="default-heading">
-						<!-- heading -->
-						<h2>Tulus' Birth Place</h2>
-					</div>
-				<div id="map" style="height:100vh; width:200vh; margin:0 auto">
-				</div>
-			<!--/ promo end -->
+			<div class="default-heading">
+				<h2>Tulus' Birth Place</h2>
+				<br>
+				<h3 align="center"><?=$name?></h3>
+			</div>
+			<div id="map" style="height:100vh; width:200vh; margin:0 auto">
+			</div>
 			
 			<!-- featured abbum -->
 			<div class="featured pad" id="featuredalbum">
@@ -1161,6 +1175,7 @@
 				radius: 400
 			}).addTo(map);
 		</script>
+
 		<!-- JQuery -->
 		<script src="js/jquery.js"></script>
 		<!-- Bootstrap JS -->
