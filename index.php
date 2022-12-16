@@ -7,6 +7,17 @@
 	$sparql_dbpedia = new \EasyRdf\Sparql\Client($sparql_endpoint);
 	$sparql_jena = new \EasyRdf\Sparql\Client('http://localhost:3030/Tulus/query');
 
+	// $uri_rdf = 'http://localhost/TubesWS_kel5/tulus.rdf';
+	// $data = \EasyRdf\Graph::newAndLoad($uri_rdf);
+	// $doc = $data->primaryTopic();
+
+	// //ambil data dbpedia tulus dari tulus.pdf
+	// $tulus_uri = 'http://localhost/TubesWS_kel5/tulus.rdf';
+	// foreach ($doc->all('owl:sameAs') as $akun) {
+	// 	$tulus_uri = $akun->get('foaf:homepage');
+	// 	break;
+	// }
+
 	// Namespace //
 	\EasyRdf\RdfNamespace::set('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
 	\EasyRdf\RdfNamespace::set('foaf', 'http://xmlns.com/foaf/0.1/');
@@ -62,6 +73,7 @@
 	$latitude = $rdf_map['lat'];
 	$longtitude = $rdf_map['long'];
 	$name = $rdf_map['name'];
+	$description = $dbpedia['description'];
 	$birthname = $dbpedia['birthName'];
 	$birthdate = $dbpedia['birthDate']
 ?>
@@ -88,6 +100,12 @@
 		<!--CSS dan Javascript Leaflet JS-->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
 		<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+		<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+	<style type="text/css">
+		body { font-family: sans-serif; }
+		dt { font-weight: bold; }
+		.image { float: right; margin: 15px; max-width: 200px}
+	</style>
 	</head>	
 	<body>
 
@@ -103,23 +121,14 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<!-- logo area -->
-							<a class="navbar-brand" href="#home">
-								<!-- logo image -->
-								<img class="img-responsive" src="img/logo/logo.png" alt="" />
-							</a>
 						</div>
 
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav navbar-right">
-								<li><a href="#websemantik">Web Semantik</a></li>
+								<li><a href="#websemantik">About</a></li>
 								<li><a href="#tempatlahir">Birth Place</a></li>
-								<li><a href="#joinus">Join Us</a></li>
-								<li><a href="#portfolio">Portfolio</a></li>
-								<li><a href="#events">Events</a></li>
-								<li><a href="#team">Team</a></li>
-								<li><a href="#contact">Contact</a></li>
+								<li><a href="#discography">Discography</a></li>
 							</ul>
 						</div>
 					</div>
@@ -133,7 +142,7 @@
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" role="listbox">
 						<div class="item active">
-							<img src="img/banner/b1.jpg" alt="...">
+							<img src="img/banner/tulus.png" alt="...">
 							<div class="container">
 								<!-- banner caption -->
 								<div class="carousel-caption slide-one">
@@ -145,7 +154,7 @@
 							</div>
 						</div>
 						<div class="item">
-							<img src="img/banner/tulus.png" alt="...">
+							<img src="img/banner/tulus2.jpg" alt="...">
 							<div class="container">
 								<!-- banner caption -->
 								<div class="carousel-caption slide-two">
@@ -183,9 +192,9 @@
 						<h2><?= $birthname ?></h2>
 						<hr>
 						<!-- paragraph -->
-						<h4>Nama Depan : </h4>
-						<h4>Nama Belakang : </h4>
-						<p>info </p>
+						<h4>Nama Depan : <?= ('foaf:givenName')?> </h4>
+						<h4>Nama Belakang : <?= ('foaf:familyName')?> </h4>
+						<p><?= $description ?></p>
 					</div>
 					<!-- hero play list -->
 					<div class="hero-playlist">
@@ -194,7 +203,14 @@
 								<!-- music album image -->
 								<div class="figure">
 									<!-- image -->
-									<img class="img-responsive" src="img/album/1.jpg" alt="" />
+									
+									<img class="img-responsive" <?php
+										$doc = \EasyRdf\Graph::newAndLoad('https://dbpedia.org/page/Tulus_(singer)');
+										if ($doc->image) {
+										echo content_tag('img', null, array('src'=>$doc->image, 'class'=>'image'));
+										} ?>
+
+									
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6">
@@ -204,9 +220,13 @@
 										<li class="playlist-number">
 											<!-- song information -->
 											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track One</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
+											<div class="col-9">
+												<dl>
+													<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd>
+													<dt>Title:</dt> <dd><?= $doc->title ?></dd>
+													<dt>Description:</dt> <dd><?= $doc->description ?></dd>
+												</dl>
+											</div>
 											</div>
 											<!-- music icon -->
 											<div class="music-icon">
@@ -218,37 +238,13 @@
 										<li class="playlist-number">
 											<!-- song information -->
 											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track Two</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
-											</div>
-											<!-- music icon -->
-											<div class="music-icon">
-												<a href="#"><i class="fa fa-play"></i></a>
-												<a href="#"><i class="fa fa-pause"></i></a>
-											</div>
-											<div class="clearfix"></div>
-										</li>
-										<li class="playlist-number">
-											<!-- song information -->
-											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track Three</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
-											</div>
-											<!-- music icon -->
-											<div class="music-icon">
-												<a href="#"><i class="fa fa-play"></i></a>
-												<a href="#"><i class="fa fa-pause"></i></a>
-											</div>
-											<div class="clearfix"></div>
-										</li>
-										<li class="playlist-number">
-											<!-- song information -->
-											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track Four</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
+											<div class="col-9">
+												<dl>
+													<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd>
+													<dt>Title:</dt> <dd><?= $doc->title ?></dd>
+													<dt>Description:</dt> <dd><?= $doc->description ?></dd>
+												</dl>
+												</div>
 											</div>
 											<!-- music icon -->
 											<div class="music-icon">
@@ -272,16 +268,16 @@
 				<br>
 				<h3 align="center"><?=$name?></h3>
 			</div>
-			<div id="map" style="height:100vh; width:200vh; margin:0 auto"></div>
+			<div id="map" style="height:100vh; width:150vh; margin:0 auto"></div>
 			<!-- End Map -->
 
 			<!-- featured abbum -->
-			<div class="featured pad" id="featuredalbum">
+			<div class="featured pad" id="discography">
 				<div class="container">
 					<!-- default heading -->
 					<div class="default-heading">
 						<!-- heading -->
-						<h2>Featured Album</h2>
+						<h2>DISCOGRAPHY</h2>
 					</div>
 					<!-- featured album elements -->
 					<div class="featured-element">
@@ -373,37 +369,6 @@
 			</div>
 			<!--/ cta end -->
 			
-			<!-- work with us -->
-			<div class="work-with-us pad" id="joinus">
-				<div class="container">
-					<!-- default heading -->
-					<div class="default-heading">
-						<!-- heading -->
-						<h2>Work With Us</h2>
-					</div>
-					<!-- why work with us content -->
-					<div class="why-content">
-						<!-- paragraph -->
-						<p class="why-message">It would be a great pleasure to have you in our team, follow these steps to join us.</p>
-						<div class="row">
-							<div class="col-md-3 col-sm-6">
-								<!-- why work with us item -->
-								<div class="why-item  delay-one">
-									<span class="why-number">1</span>
-									<!-- paragraph -->
-									<p>Sed ut perspi ciatis unde omnis iste natus error sit vol uptatem accus antium totam rem aperiam, eaque ipsa quae ab illo inventore veritatisnatus.</p>
-								</div>
-							</div>
-						</div>
-						<!-- apply button -->
-						<div class="apply-btn">
-							<!-- button line -->
-							<a class="btn btn-lg btn-theme" href="#">Join Now</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ end work with us -->
 			
 			<!-- news letter -->
 			<div class="news-letter">
@@ -427,368 +392,6 @@
 				</div>
 			</div>
 			<!-- news letter end -->
-			
-			<div class="portfolio pad" id="portfolio">
-				<div>
-					<!-- default heading -->
-					<div class="default-heading">
-						<!-- heading -->
-						<h2>Portfolio</h2>
-					</div>
-				</div>
-				<!-- portfolio -->
-				<div class="portfolio-content" id="portfolioOwl">
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/1.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/2.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/3.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/4.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-				</div>
-				<div class="text-center">
-					<a href="#" class="btn btn-lg btn-theme">View more</a>
-				</div>
-				<!-- portfolio end -->
-			</div>
-			<!-- work with us end -->
-			
-			<!-- events -->
-			<div class="events parallax-three pad" id="events">
-				<div class="container">
-					<!-- default heading -->
-					<div class="default-heading-shadow">
-						<!-- heading -->
-						<h2>Coming Events</h2>
-					</div>
-					<!-- events element -->
-					<div class="events-element">
-						<div class="row">
-							<div class="col-md-6 col-sm-6">
-								<!-- event item -->
-								<div class="events-item ">
-									<!-- image container -->
-									<div class="figure">
-										<!-- event date -->
-										<div class="event-date">
-											24 <span class="emonth">Jan</span>
-											<div class="clearfix"></div>
-											<!-- time -->
-											<span class="etime">06:30 pm</span>
-										</div>
-										<!-- event location -->
-										<span class="event-location"><i class="fa fa-map-marker"></i> New York</span>
-										<!-- image -->
-										<img class="img-responsive" src="img/event/1.jpg" alt="" />
-										<!-- image hover -->
-										<div class="img-hover">
-											<!-- hover icon -->
-											<a href="#"><i class="fa fa-play-circle"></i></a>
-										</div>
-									</div>
-									<!-- event information -->
-									<div class="event-info">
-										<!-- event title -->
-										<h3>Sound Of melodi In Instrumesnts</h3>
-										<!-- horizontal line --><hr />
-										<!-- paragraph -->
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sed doconsect etur eiusmod teme et dolore magna aliqua... <a href="#">more</a></p>
-										<!-- buy ticket button link -->
-										<button href="#bookTicket" class="btn btn-lg btn-theme" data-toggle="modal" >Book Ticket</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-sm-6">
-								<!-- event item -->
-								<div class="events-item ">
-									<!-- image container -->
-									<div class="figure">
-										<!-- event date -->
-										<div class="event-date">
-											31 <span class="emonth">Jan</span>
-											<div class="clearfix"></div>
-											<!-- time -->
-											<span class="etime">09:45 pm</span>
-										</div>
-										<!-- event location -->
-										<span class="event-location"><i class="fa fa-map-marker"></i> Romania</span>
-										<!-- image -->
-										<img class="img-responsive" src="img/event/2.jpg" alt="" />
-										<!-- image hover -->
-										<div class="img-hover">
-											<!-- hover icon -->
-											<a href="#"><i class="fa fa-play-circle"></i></a>
-										</div>
-									</div>
-									<!-- event information -->
-									<div class="event-info">
-										<!-- event title -->
-										<h3>Rock Music Festival at City Life Mall</h3>
-										<!-- horizontal line --><hr />
-										<!-- paragraph -->
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sed doconsect etur eiusmod teme et dolore magna aliqua... <a href="#">more</a></p>
-										<!-- buy ticket button link -->
-										<button href="#bookTicket" class="btn btn-lg btn-theme" data-toggle="modal" >Book Ticket</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-sm-6">
-								<!-- event item -->
-								<div class="events-item ">
-									<!-- image container -->
-									<div class="figure">
-										<!-- event date -->
-										<div class="event-date">
-											14 <span class="emonth">Feb</span>
-											<div class="clearfix"></div>
-											<!-- time -->
-											<span class="etime">10:30 am</span>
-										</div>
-										<!-- event location -->
-										<span class="event-location"><i class="fa fa-map-marker"></i> New Delhi</span>
-										<!-- image -->
-										<img class="img-responsive" src="img/event/3.jpg" alt="" />
-										<!-- image hover -->
-										<div class="img-hover">
-											<!-- hover icon -->
-											<a href="#"><i class="fa fa-play-circle"></i></a>
-										</div>
-									</div>
-									<!-- event information -->
-									<div class="event-info">
-										<!-- event title -->
-										<h3>Fashion Show Light At Hollywood</h3>
-										<!-- horizontal line --><hr />
-										<!-- paragraph -->
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sed doconsect etur eiusmod teme et dolore magna aliqua... <a href="#">more</a></p>
-										<!-- buy ticket button link -->
-										<button href="#bookTicket" class="btn btn-lg btn-theme" data-toggle="modal" >Book Ticket</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-sm-6">
-								<!-- event item -->
-								<div class="events-item ">
-									<!-- image container -->
-									<div class="figure">
-										<!-- event date -->
-										<div class="event-date">
-											31 <span class="emonth">Mar</span>
-											<div class="clearfix"></div>
-											<!-- time -->
-											<span class="etime">10:00 pm</span>
-										</div>
-										<!-- event location -->
-										<span class="event-location"><i class="fa fa-map-marker"></i> New Delhi</span>
-										<!-- image -->
-										<img class="img-responsive" src="img/event/4.jpg" alt="" />
-										<!-- image hover -->
-										<div class="img-hover">
-											<!-- hover icon -->
-											<a href="#"><i class="fa fa-play-circle"></i></a>
-										</div>
-									</div>
-									<!-- event information -->
-									<div class="event-info">
-										<!-- event title -->
-										<h3>Fashion Show Light At Hollywood</h3>
-										<!-- horizontal line --><hr />
-										<!-- paragraph -->
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sed doconsect etur eiusmod teme et dolore magna aliqua... <a href="#">more</a></p>
-										<!-- buy ticket button link -->
-										<button href="#bookTicket" class="btn btn-lg btn-theme" data-toggle="modal" >Book Ticket</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- events end -->
-			
-			<!-- about -->
-			<div class="about" id="team">
-				<div class="container">
-					<!-- default heading -->
-					<div class="default-heading">
-						<!-- heading -->
-						<h2>Who We Are?</h2>
-					</div>
-					<!-- about what we are like content -->
-					<div class="about-what-we">
-						<div class="row">
-							<div class="col-md-4 col-sm-4">
-								<div class="what-we-item ">
-									<!-- heading with icon -->
-									<h3><i class="fa fa-heartbeat"></i> What we do?</h3>
-									<!-- paragraph -->
-									<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit occaecat cupidatat non id est laborum.</p>
-								</div>
-							</div>
-							<div class="col-md-4 col-sm-4">
-								<div class="what-we-item ">
-									<!-- heading with icon -->
-									<h3><i class="fa fa-hand-o-up"></i> Why choose us?</h3>
-									<!-- paragraph -->
-									<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit occaecat cupidatat non id est laborum.</p>
-								</div>
-							</div>
-							<div class="col-md-4 col-sm-4">
-								<div class="what-we-item ">
-									<!-- heading with icon -->
-									<h3><i class="fa fa-map-marker"></i> Where we are?</h3>
-									<!-- paragraph -->
-									<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit occaecat cupidatat non id est laborum.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- our team -->
-				<div class="team">
-					<div class="container">	
-						<!-- Team Member's Details -->
-						<div class="team-content">
-							<div class="row">
-								<div class="col-md-3 col-sm-6">
-									<!-- Team Member -->
-									<div class="team-member  delay-one">
-										<!-- Image Hover Block -->
-										<div class="member-img">
-											<!-- Image  -->
-											<img class="img-responsive" src="img/user/1.jpg" alt="" />
-											<!-- Hover block -->
-											<div class="social text-center">
-												<a href="#"><i class="fa fa-facebook"></i></a>
-												<a href="#"><i class="fa fa-google-plus"></i></a>
-												<a href="#"><i class="fa fa-linkedin"></i></a>
-												<a href="#"><i class="fa fa-twitter"></i></a>
-											</div>
-										</div>
-										<!-- Member Details -->
-										<h3>Stacey Kowalski</h3>
-										<span class="designation">Guitarist</span>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-6">
-									<!-- Team Member -->
-									<div class="team-member  delay-two">
-										<!-- Image Hover Block -->
-										<div class="member-img">
-											<!-- Image  -->
-											<img class="img-responsive" src="img/user/2.jpg" alt="" />
-											<!-- Hover block -->
-											<div class="social text-center">
-												<a href="#"><i class="fa fa-facebook"></i></a>
-												<a href="#"><i class="fa fa-google-plus"></i></a>
-												<a href="#"><i class="fa fa-linkedin"></i></a>
-												<a href="#"><i class="fa fa-twitter"></i></a>
-											</div>
-										</div>
-										<!-- Member Details -->
-										<h3>Joanna Koo</h3>
-										<span class="designation">Clarinetist</span>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-6">
-									<!-- Team Member -->
-									<div class="team-member  delay-three">
-										<!-- Image Hover Block -->
-										<div class="member-img">
-											<!-- Image  -->
-											<img class="img-responsive" src="img/user/3.jpg" alt="" />
-											<!-- Hover block -->
-											<div class="social text-center">
-												<a href="#"><i class="fa fa-facebook"></i></a>
-												<a href="#"><i class="fa fa-google-plus"></i></a>
-												<a href="#"><i class="fa fa-linkedin"></i></a>
-												<a href="#"><i class="fa fa-twitter"></i></a>
-											</div>
-										</div>
-										<!-- Member Details -->
-										<h3>Mark Laredo</h3>
-										<span class="designation">Accordionist</span>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-6">
-									<!-- Team Member -->
-									<div class="team-member  delay-four">
-										<!-- Image Hover Block -->
-										<div class="member-img">
-											<!-- Image  -->
-											<img class="img-responsive" src="img/user/4.jpg" alt="" />
-											<!-- Hover block -->
-											<div class="social text-center">
-												<a href="#"><i class="fa fa-facebook"></i></a>
-												<a href="#"><i class="fa fa-google-plus"></i></a>
-												<a href="#"><i class="fa fa-linkedin"></i></a>
-												<a href="#"><i class="fa fa-twitter"></i></a>
-											</div>
-										</div>
-										<!-- Member Details -->
-										<h3>Belie Costa</h3>
-										<span class="designation">Keyboardist</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- about end -->
 			
 			
 			<!-- footer -->
