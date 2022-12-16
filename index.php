@@ -1,5 +1,6 @@
 <?php
 	require 'vendor/autoload.php';
+	require_once __DIR__."/html_tag_helpers.php";
 	$sparql_endpoint = 'https://dbpedia.org/sparql';
 
 	// Jangan Lupa Buat Dataset Baru ya di Jena Fuseki, Nama Dataset-nya Tulus //
@@ -62,14 +63,14 @@
 	$longtitude = $rdf_map['long'];
 	$name = $rdf_map['name'];
 	$birthname = $dbpedia['birthName'];
-	$birthdate = $dbpedia['birthDate']?>
+	$birthdate = $dbpedia['birthDate']
 ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Melodi</title>
+		<title>Web Semantik</title>
 		<!-- Styles -->
 		<!-- Bootstrap CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">	
@@ -89,59 +90,9 @@
 		<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 	</head>	
 	<body>
-		
-		<!-- modal for booking ticket form -->
-		<div class="modal fade" id="bookTicket" tabindex="-1" role="dialog" aria-labelledby="BookTicket">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Name of The Event &nbsp; <small><span class="label label-success">Available</span> &nbsp; <span class="label label-danger">Not Available</span></small></h4>
-					</div>
-					<!-- form for events ticket booking -->
-					<form>
-						<div class="modal-body">
-							<div class="form-group">
-								<label for="exampleInputEmail1">Email</label>
-								<input type="email" class="form-control" id="exampleInputEmail1" placeholder="example@mail.com">
-							</div>
-							<div class="form-group">
-								<label for="exampleInputContact">Contact</label>
-								<input type="text" class="form-control" id="exampleInputContact" placeholder="+91 55 5555 5555">
-							</div>
-							<div class="form-group">
-								<label for="exampleInputSeats">Number of Tickets</label>
-								<select class="form-control" id="exampleInputSeats">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-								</select>
-							</div>
-							<div class="checkbox">
-								<label>
-									<input type="checkbox"> I accept the Terms of Service
-								</label>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<!-- link to payment gatway here -->
-							<button type="button" class="btn btn-primary">Book Now</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		
-		<!-- wrapper -->
-		<div class="wrapper" id="home">
-		
+
 			<!-- header area -->
 			<header>
-
-				<!-- primary menu -->
 				<nav class="navbar navbar-fixed-top navbar-default">
 					<div class="container">
 						<!-- Brand and toggle get grouped for better mobile display -->
@@ -162,16 +113,16 @@
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav navbar-right">
-								<li><a href="#latestalbum">Latest Album</a></li>
-								<li><a href="#featuredalbum">Featured Album</a></li>
+								<li><a href="#websemantik">Web Semantik</a></li>
+								<li><a href="#tempatlahir">Birth Place</a></li>
 								<li><a href="#joinus">Join Us</a></li>
 								<li><a href="#portfolio">Portfolio</a></li>
 								<li><a href="#events">Events</a></li>
 								<li><a href="#team">Team</a></li>
 								<li><a href="#contact">Contact</a></li>
 							</ul>
-						</div><!-- /.navbar-collapse -->
-					</div><!-- /.container-fluid -->
+						</div>
+					</div>
 				</nav>
 			</header>
 			<!--/ header end -->
@@ -187,13 +138,9 @@
 								<!-- banner caption -->
 								<div class="carousel-caption slide-one">
 									<!-- heading -->
-									<h2 class="animated fadeInLeftBig"><i class="fmusic.site@melodi.com
-   
-   a fa-music"></i> Melodi For You!</h2>
+									<h2 class="animated fadeInLeftBig">Melodi For You!</h2>
 									<!-- paragraph -->
 									<h3 class="animated fadeInRightBig">Find More Innovative &amp; Creative Music Albums.</h3>
-									<!-- button -->
-									<a href="#" class="animated fadeIn btn btn-theme">Download Here</a>
 								</div>
 							</div>
 						</div>
@@ -228,7 +175,7 @@
 			<div class="nav-animate"></div>
 			
 			<!-- Hero block area -->
-			<div id="latestalbum" class="hero pad">
+			<div id="websemantik" class="hero pad">
 				<div class="container">
 					<!-- hero content -->
 					<div class="hero-content ">
@@ -236,7 +183,9 @@
 						<h2><?= $birthname ?></h2>
 						<hr>
 						<!-- paragraph -->
-						<p>We sing the best <strong class="theme-color">Songs</strong> and now we control the world best <strong class="theme-color">Music</strong>.</p>
+						<h4>Nama Depan : </h4>
+						<h4>Nama Belakang : </h4>
+						<p>info </p>
 					</div>
 					<!-- hero play list -->
 					<div class="hero-playlist">
@@ -246,19 +195,6 @@
 								<div class="figure">
 									<!-- image -->
 									<img class="img-responsive" src="img/album/1.jpg" alt="" />
-									<!-- disk image -->
-									<img class="img-responsive disk" src="img/album/disk.png" alt="" />
-								</div>
-								<!-- album details -->
-								<div class="album-details">
-									<!-- title -->
-									<h4>Perfect Melodi</h4>
-									<!-- composed by -->
-									<h5>By Himanshu</h5>
-									<!-- paragraph -->
-									<p>Lorem Ipsum has been the industry's standard dummy text ever since 1500.</p>
-									<!-- button -->
-									<a href="#" class="btn btn-lg btn-theme" id="playNowBtn"><i class="fa fa-play"></i>&nbsp; Play Now</a>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6">
@@ -321,62 +257,6 @@
 											</div>
 											<div class="clearfix"></div>
 										</li>
-										<li class="playlist-number">
-											<!-- song information -->
-											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track Five</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
-											</div>
-											<!-- music icon -->
-											<div class="music-icon">
-												<a href="#"><i class="fa fa-play"></i></a>
-												<a href="#"><i class="fa fa-pause"></i></a>
-											</div>
-											<div class="clearfix"></div>
-										</li>
-										<li class="playlist-number">
-											<!-- song information -->
-											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track Six</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
-											</div>
-											<!-- music icon -->
-											<div class="music-icon">
-												<a href="#"><i class="fa fa-play"></i></a>
-												<a href="#"><i class="fa fa-pause"></i></a>
-											</div>
-											<div class="clearfix"></div>
-										</li>
-										<li class="playlist-number">
-											<!-- song information -->
-											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track Seven</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
-											</div>
-											<!-- music icon -->
-											<div class="music-icon">
-												<a href="#"><i class="fa fa-play"></i></a>
-												<a href="#"><i class="fa fa-pause"></i></a>
-											</div>
-											<div class="clearfix"></div>
-										</li>
-										<li class="playlist-number">
-											<!-- song information -->
-											<div class="song-info">
-												<!-- song title -->
-												<h4>Melodi Song Track Eight</h4>
-												<p><strong>Album</strong>: Title &nbsp;|&nbsp; <strong>Type</strong>: Rock &nbsp;|&nbsp; <strong>Singer</strong>: Dawn</p>
-											</div>
-											<!-- music icon -->
-											<div class="music-icon">
-												<a href="#"><i class="fa fa-play"></i></a>
-												<a href="#"><i class="fa fa-pause"></i></a>
-											</div>
-											<div class="clearfix"></div>
-										</li>
 									</ul>
 								</div>
 							</div>
@@ -387,14 +267,14 @@
 			<!--/ hero end -->
 			
 			<!-- Bagian Map -->
-			<div class="default-heading">
+			<div class="default-heading" id="tempatlahir">
 				<h2>Tulus' Birth Place</h2>
 				<br>
 				<h3 align="center"><?=$name?></h3>
 			</div>
-			<div id="map" style="height:100vh; width:200vh; margin:0 auto">
-			</div>
-			
+			<div id="map" style="height:100vh; width:200vh; margin:0 auto"></div>
+			<!-- End Map -->
+
 			<!-- featured abbum -->
 			<div class="featured pad" id="featuredalbum">
 				<div class="container">
@@ -469,69 +349,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4 col-sm-6">
-								<!-- featured item -->
-								<div class="featured-item ">
-									<!-- image container -->
-									<div class="figure">
-										<!-- image -->
-										<img class="img-responsive" src="img/featured/4.jpg" alt="" />
-										<!-- paragraph -->
-										<p>There are many variations of passages available, but the majority have suffered Lorem alteration in some form, by injected look even slightly believable.</p>
-									</div>
-									<!-- featured information -->
-									<div class="featured-item-info">
-										<!-- featured title -->
-										<h4>Dirty Dancing</h4>
-										<!-- horizontal line -->
-										<hr />
-										<!-- some responce from social medial or web likes -->
-										<p>1024+ <span class="label label-theme">Like</span> &nbsp;&nbsp; 825+ <span class="label label-theme">Love</span></p>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4 col-sm-6">
-								<!-- featured item -->
-								<div class="featured-item ">
-									<!-- image container -->
-									<div class="figure">
-										<!-- image -->
-										<img class="img-responsive" src="img/featured/5.jpg" alt="" />
-										<!-- paragraph -->
-										<p>There are many variations of passages available, but the majority have suffered Lorem alteration in some form, by injected look even slightly believable.</p>
-									</div>
-									<!-- featured information -->
-									<div class="featured-item-info">
-										<!-- featured title -->
-										<h4>Hotel California</h4>
-										<!-- horizontal line -->
-										<hr />
-										<!-- some responce from social medial or web likes -->
-										<p>1024+ <span class="label label-theme">Like</span> &nbsp;&nbsp; 825+ <span class="label label-theme">Love</span></p>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4 col-sm-6">
-								<!-- featured item -->
-								<div class="featured-item ">
-									<!-- image container -->
-									<div class="figure">
-										<!-- image -->
-										<img class="img-responsive" src="img/featured/6.jpg" alt="" />
-										<!-- paragraph -->
-										<p>There are many variations of passages available, but the majority have suffered Lorem alteration in some form, by injected look even slightly believable.</p>
-									</div>
-									<!-- featured information -->
-									<div class="featured-item-info">
-										<!-- featured title -->
-										<h4>Punk Compilation</h4>
-										<!-- horizontal line -->
-										<hr />
-										<!-- some responce from social medial or web likes -->
-										<p>1024+ <span class="label label-theme">Like</span> &nbsp;&nbsp; 825+ <span class="label label-theme">Love</span></p>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -549,12 +366,6 @@
 								<h3>Melodi, A Fully Rock Album Pro</h3>
 								<!-- paragraph -->
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim sectetur adipiscing elit, sed do eiusmod tempoad minim veniam consequat.</p>
-							</div>
-							<div class="col-md-3 col-sm-4">
-								<div class="cta-btn text-center">
-									<!-- purchase now button -->
-									<a href="#" class="btn btn-default btn-lg">Download Now</a>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -579,30 +390,6 @@
 								<!-- why work with us item -->
 								<div class="why-item  delay-one">
 									<span class="why-number">1</span>
-									<!-- paragraph -->
-									<p>Sed ut perspi ciatis unde omnis iste natus error sit vol uptatem accus antium totam rem aperiam, eaque ipsa quae ab illo inventore veritatisnatus.</p>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<!-- why work with us item -->
-								<div class="why-item  delay-two">
-									<span class="why-number">2</span>
-									<!-- paragraph -->
-									<p>Sed ut perspi ciatis unde omnis iste natus error sit vol uptatem accu santium totam rem aperiam, eaque ipsa quae ab illo inventore veritatisnatus.</p>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<!-- why work with us item -->
-								<div class="why-item  delay-three">
-									<span class="why-number">3</span>
-									<!-- paragraph -->
-									<p>Sed ut perspi ciatis unde omnis iste natus error sit vol uptatem accus antium totam rem aperiam, eaque ipsa quae ab illo inventore veritatisnatus.</p>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<!-- why work with us item -->
-								<div class="why-item  delay-four">
-									<span class="why-number">4</span>
 									<!-- paragraph -->
 									<p>Sed ut perspi ciatis unde omnis iste natus error sit vol uptatem accus antium totam rem aperiam, eaque ipsa quae ab illo inventore veritatisnatus.</p>
 								</div>
@@ -699,66 +486,6 @@
 					<div class="item">
 						<!-- item image -->
 						<img class="img-responsive" src="img/portfolio/4.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/5.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/6.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/7.jpg" alt="">
-						<!-- transparent background -->
-						<div class="p-transparent"></div>
-						<!-- on mouse hover details -->
-						<div class="p-hover">
-							<!-- heading /title -->
-							<h3>Album Title</h3><hr>
-							<!-- project details -->
-							<p>Some details about album.</p>
-							<!-- icon -->
-							<a href="#"><i class="fa fa-share"></i></a>
-						</div>
-					</div>
-					<div class="item">
-						<!-- item image -->
-						<img class="img-responsive" src="img/portfolio/8.jpg" alt="">
 						<!-- transparent background -->
 						<div class="p-transparent"></div>
 						<!-- on mouse hover details -->
@@ -1063,117 +790,10 @@
 			</div>
 			<!-- about end -->
 			
-			<!-- meet -->
-			<div class="meet parallax-four pad" id="meet">
-				<div class="container">
-					<!-- default heading -->
-					<div class="default-heading-shadow">
-						<h2>Upcoming Meets</h2>
-					</div>
-					<!-- meet location image -->
-					<div class="meet-map">
-						<img class="img-responsive img-map" src="img/flat/map.png" alt="" />
-						<!-- map marker for India  -->
-						<a href="#" class="map-marker india " data-toggle="tooltip" data-placement="top" title="India"><img class="img-responsive" src="img/flat/map-marker.png" alt="" /></a>
-						<!-- map marker for United States  -->
-						<a href="#" class="map-marker usa " data-toggle="tooltip" data-placement="top" title="United States"><img class="img-responsive" src="img/flat/map-marker.png" alt="" /></a>
-						<!-- map marker for South Africa  -->
-						<a href="#" class="map-marker sa " data-toggle="tooltip" data-placement="top" title="South Africa"><img class="img-responsive" src="img/flat/map-marker.png" alt="" /></a>
-						<!-- map marker for Russia  -->
-						<a href="#" class="map-marker russia " data-toggle="tooltip" data-placement="top" title="Russia"><img class="img-responsive" src="img/flat/map-marker.png" alt="" /></a>
-						<!-- map marker for Brazil  -->
-						<a href="#" class="map-marker brazil " data-toggle="tooltip" data-placement="top" title="Brazil"><img class="img-responsive" src="img/flat/map-marker.png" alt="" /></a>
-					</div>
-				</div>
-			</div>
-			<!-- meet end -->
-			
-			<!-- contact -->
-			<div class="contact pad" id="contact">
-				<div class="container">
-					<!-- default heading -->
-					<div class="default-heading">
-						<!-- heading -->
-						<h2>Contact Us</h2>
-					</div>
-					<div class="row">	
-						<div class="col-md-4 col-sm-4">
-							<!-- contact item -->
-							<div class="contact-item ">
-								<!-- big icon -->
-								<i class="fa fa-street-view"></i>
-								<!-- contact details  -->
-								<span class="contact-details">#30/67, 5th Street, Mega Market Circle, New Delhi - 625001</span>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-4">
-							<!-- contact item -->
-							<div class="contact-item ">
-								<!-- big icon -->
-								<i class="fa fa-wifi"></i>
-								<!-- contact details  -->
-								<span class="contact-details">music.site@melodi.com</span>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-4">
-							<!-- contact item -->
-							<div class="contact-item ">
-								<!-- big icon -->
-								<i class="fa fa-phone"></i>
-								<!-- contact details  -->
-								<span class="contact-details">555 555 5555</span>
-							</div>
-						</div>
-					</div>
-					<!-- form content -->
-					<div class="form-content ">
-						<!-- paragraph -->
-						<p>Do you have any idea in your mind? Drop us a line.</p>
-						<form role="form" id="contactForm" method="post">
-							<div class="row">
-								<div class="col-md-6 col-sm-6">
-									<div class="form-group">
-										<label for="name">Name</label>
-										<input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
-									</div>
-									<div class="form-group">
-										<label for="email">Email</label>
-										<input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
-									</div>
-									<div class="form-group">
-										<label for="phone">Phone</label>
-										<input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone">
-									</div>
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<div class="form-group">
-										<label for="message">Message</label>
-										<textarea class="form-control" id="message" name="message" rows="9" placeholder="Enter message"></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="text-center">
-								<button type="submit" class="btn btn-lg btn-theme">Send Message</button>
-							</div>
-						</form>
-												
-					</div>
-
-				</div>
-			</div>
-			<!-- contact end -->
 			
 			<!-- footer -->
 			<footer>
 				<div class="container">
-					<!-- social media links -->
-					<div class="social">
-						<a class="h-facebook" href="#"><i class="fa fa-facebook"></i></a>
-						<a class="h-google" href="#"><i class="fa fa-google-plus"></i></a>
-						<a class="h-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-						<a class="h-twitter" href="#"><i class="fa fa-twitter"></i></a>
-					</div>
-					<!-- copy right -->
 					<p class="copy-right">&copy; copyright 2018, All rights are reserved.</p>
 				</div>
 			</footer>
