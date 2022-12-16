@@ -8,7 +8,7 @@
 	$sparql_jena = new \EasyRdf\Sparql\Client('http://localhost:3030/Tulus/query');
 
 	// $uri_rdf = 'http://localhost/TubesWS_kel5/tulus.rdf';
-	// $data = \EasyRdf\Graph::newAndLoad('http://dbpedia.org/resource/Tulus_(singer)');
+	// $data = \EasyRdf\Graph::newAndLoad($uri_rdf);
 	// $doc = $data->primaryTopic();
 
 	// //ambil data dbpedia tulus dari tulus.pdf
