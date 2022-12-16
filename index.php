@@ -8,7 +8,7 @@
 	$sparql_jena = new \EasyRdf\Sparql\Client('http://localhost:3030/Tulus/query');
 
 	// $uri_rdf = 'http://localhost/TubesWS_kel5/tulus.rdf';
-	// $data = \EasyRdf\Graph::newAndLoad($uri_rdf);
+	// $data = \EasyRdf\Graph::newAndLoad('http://dbpedia.org/resource/Tulus_(singer)');
 	// $doc = $data->primaryTopic();
 
 	// //ambil data dbpedia tulus dari tulus.pdf
@@ -192,7 +192,8 @@
 						<h2><?= $birthname ?></h2>
 						<hr>
 						<!-- paragraph -->
-						<h4>Nama Depan : <?= ('foaf:givenName')?> </h4>
+						<!-- aku mau ambil nama depan, sm belakang dri file rdf, gimanaaa?? -->
+						<h4>Nama Depan : <?php ('foaf:givenName')?> </h4> 
 						<h4>Nama Belakang : <?= ('foaf:familyName')?> </h4>
 						<p><?= $description ?></p>
 					</div>
