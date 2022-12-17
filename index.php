@@ -110,9 +110,25 @@
 		];
 	}
 
-	?>
-	
+	// query manggil rdf
+	$sparql_query_name = 'SELECT ?nama ?tanggallahir ?ta WHERE {
+		?subject dbp:birthName ?nama;
+		dbp:birthDate ?tanggallahir;
+		dbp:yearsActive ?ta.
+	} ';
 
+	$result_rdf_name = $sparql_jena->query($sparql_query_name);
+	$rdf_name = [];
+	foreach ($result_rdf_name as $row)
+	{
+		$rdf_name = [
+			'nama' => $row->nama,
+			'tanggallahir' => $row->tanggallahir,
+			'ta' => $row->ta,
+		];
+	}
+
+	?>
 <!--Titik Koordinat Open Street Map-->
 <?php
 	$latitude = $rdf_map['lat'];

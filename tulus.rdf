@@ -45,9 +45,8 @@
     <rdf:Description rdf:about="https://dbpedia.org/page/Tulus_(album)">
         <dbp:artist rdf:resource="https://www.imdb.com/title/tt19119528/">
         <dbp:name>Tulus : Labirin</dbp:name>
-        </foaf:Project>
-    </foaf:pastProject>
-  </foaf:Person>
+    </rdf:Description>
+  <!-- </foaf:Person> -->
 
 <rdf:Description rdf:about="https://dbpedia.org/page/Tulus_(album)">
     <dbp:Album rdf:resource="https://open.spotify.com/album/3R4IAF9ApqYeUQrv1ddyoR"/>
