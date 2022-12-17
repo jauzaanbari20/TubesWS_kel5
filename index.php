@@ -26,6 +26,7 @@
 	\EasyRdf\RdfNamespace::set('geo', 'http://www.opengis.net/ont/geosparql#');
 	\EasyRdf\RdfNamespace::set('dbp', 'http://dbpedia.org/property/');
 	\EasyRdf\RdfNamespace::set('dc', 'http://purl.org/dc/elements/1.1/');
+	\EasyRdf\RdfNamespace::set('sfy', 'https://open.spotify.com/');
 	\EasyRDf\RdfNamespace::setDefault('og');
 
 	// Query Ambil Data dari DBPedia, Tinggal Tambahin aja Predikat ama Hasil yang Mau Diambil //
@@ -66,7 +67,51 @@
 			'name' => $row->name,
 		];
 	}
-?>
+
+	$sparql_query_album = "SELECT ?TujuhBelas ?Kelana ?Remedi ?Interaksi ?Ingkar ?JatuhSuka ?Nala ?HatiHatidiJalan ?Diri ?SatuKali
+    WHERE {
+        ?subject sfy:number ?TujuhBelas.
+        ?subject sfy:number ?Remedi.
+        ?subject sfy:number ?Interaksi.
+        ?subject sfy:number ?Ingkar.
+        ?subject sfy:number ?JatuhSuka.
+        ?subject sfy:number ?Nala.
+        ?subject sfy:number ?HatiHatidiJalan.
+        ?subject sfy:number ?Kelana.
+        ?subject sfy:number ?Diri.
+        ?subject sfy:number ?SatuKali.
+  
+        FILTER( (?TujuhBelas) = '18255652')
+        FILTER( (?Kelana) = '10385435')
+        FILTER( (?Remedi) = '9781211')
+        FILTER( (?Interaksi) = '54398256')
+        FILTER( (?Ingkar) = '21560638')
+        FILTER( (?JatuhSuka) = '16844048')
+        FILTER( (?Nala) = '13566089')
+        FILTER( (?HatiHatidiJalan) = '153191222')
+        FILTER( (?Diri) = '63338847')
+        FILTER( (?SatuKali) = '10291769')
+	}";
+	$result_rdf_album = $sparql_jena->query($sparql_query_album);
+	$rdf_album= [];
+	foreach ($result_rdf_album as $row)
+	{
+		$rdf_album = [
+			'TujuhBelas'        =>  $row->TujuhBelas,
+			'Kelana'            =>  $row->Kelana,
+			'Remedi'            =>  $row->Remedi,
+			'Interaksi'         =>  $row->Interaksi,
+			'Ingkar'            =>  $row->Ingkar,
+			'JatuhSuka'         =>  $row->JatuhSuka,
+			'Nala'              =>  $row->Nala,
+			'HatiHatidiJalan'   =>  $row->HatiHatidiJalan,
+			'Diri'              =>  $row->Diri,
+			'SatuKali'          =>  $row->SatuKali,
+		];
+	}
+
+	?>
+	
 
 <!--Titik Koordinat Open Street Map-->
 <?php
@@ -77,7 +122,6 @@
 	$birthname = $dbpedia['birthName'];
 	$birthdate = $dbpedia['birthDate']
 ?>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -101,6 +145,12 @@
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
 		<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 		<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+		<!--------------------------------Setting leaflet.js------------------------------------------->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+    <!----------------------------------Setting Google Chart--------------------------------------->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<style type="text/css">
 		body { font-family: sans-serif; }
 		dt { font-weight: bold; }
@@ -146,24 +196,16 @@
 							<div class="container">
 								<!-- banner caption -->
 								<div class="carousel-caption slide-one">
-									<!-- heading -->
-									<h2 class="animated fadeInLeftBig">Melodi For You!</h2>
-									<!-- paragraph -->
-									<h3 class="animated fadeInRightBig">Find More Innovative &amp; Creative Music Albums.</h3>
 								</div>
 							</div>
 						</div>
 						<div class="item">
-							<img src="img/banner/tulus2.jpg" alt="...">
+							<img src="img/banner/tulus3.png" alt="...">
 							<div class="container">
 								<!-- banner caption -->
 								<div class="carousel-caption slide-two">
 									<!-- heading -->
-									<h2 class="animated fadeInLeftBig"><i class="fa fa-headphones"></i> Listen It...</h2>
-									<!-- paragraph -->
-									<h3 class="animated fadeInRightBig">Lorem ipsum dolor sit amet, consectetur elit.</h3>
 									<!-- button -->
-									<a href="#" class="animated fadeIn btn btn-theme">Listen Now</a>
 								</div>
 							</div>
 						</div>
@@ -205,13 +247,11 @@
 								<div class="figure">
 									<!-- image -->
 									
-									<img class="img-responsive" <?php
+									<img class="img-responsive"> <?php
 										$doc = \EasyRdf\Graph::newAndLoad('https://dbpedia.org/page/Tulus_(singer)');
 										if ($doc->image) {
 										echo content_tag('img', null, array('src'=>$doc->image, 'class'=>'image'));
 										} ?>
-
-									
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6">
@@ -272,13 +312,58 @@
 			<div id="map" style="height:100vh; width:150vh; margin:0 auto"></div>
 			<!-- End Map -->
 
-			<!-- featured abbum -->
+			<!-- Bagian Google Chart -->
 			<div class="featured pad" id="discography">
 				<div class="container">
 					<!-- default heading -->
 					<div class="default-heading">
 						<!-- heading -->
 						<h2>DISCOGRAPHY</h2>
+						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Single', 'Total Listener'],
+          ["Tujuh Belas",  <?= $rdf_album['TujuhBelas'] ?>,],
+          ["Kelana", <?= $rdf_album['Kelana'] ?>,],
+          ["Remedi",  <?= $rdf_album['Remedi'] ?>,],
+          ["Interaksi",  <?= $rdf_album['Interaksi'] ?>,],
+          ['Ingkar',  <?= $rdf_album['Ingkar'] ?>,],
+          ["Jatuh Suka",  <?= $rdf_album['JatuhSuka'] ?>,],
+          ["Nala",  <?= $rdf_album['Nala'] ?>,],
+          ["Hati-Hati di Jalan",  <?= $rdf_album['HatiHatidiJalan'] ?>,],
+          ["Diri",  <?= $rdf_album['Diri'] ?>,],
+          ['Satu Kali', <?= $rdf_album['SatuKali'] ?>,]
+        ]);
+
+
+        var options = {
+          width: 800,
+          legend: { position: 'none' },
+          chart: {
+            title: 'Total Player on Spotify Album Manusia',
+            subtitle: 'By: Tulus' },
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Album Manusia'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      };
+    </script>
+  </head>
+  <body>
+    <div id="top_x_div" style="width: 800px; height: 600px;"></div>
+
+  </body>
 					</div>
 					<!-- featured album elements -->
 					<div class="featured-element">
@@ -422,6 +507,7 @@
 				radius: 400
 			}).addTo(map);
 		</script>
+
 
 		<!-- JQuery -->
 		<script src="js/jquery.js"></script>

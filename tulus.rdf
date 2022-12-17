@@ -7,7 +7,8 @@
     xmlns:owl="http://www.w3.org/2002/07/owl#"
     xmlns:geo="http://www.opengis.net/ont/geosparql#"
     xmlns:dbp="http://dbpedia.org/property/"
-    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:sfy="https://open.spotify.com/">
   
   <foaf:profile rdf:about="http://localhost/Tulus/tulus.rdf">
       <rdfs:label>Tulus</rdfs:label>
@@ -40,4 +41,19 @@
         </foaf:Project>
     </foaf:pastProject>
   </foaf:Person>
+
+<rdf:Description rdf:about="https://dbpedia.org/page/Tulus_(album)">
+    <dbp:Album rdf:resource="https://open.spotify.com/album/3R4IAF9ApqYeUQrv1ddyoR"/>
+    <sfy:number>18255652</sfy:number>
+    <sfy:number>10385435</sfy:number>
+    <sfy:number>9781211</sfy:number>
+    <sfy:number>54398256</sfy:number>
+    <sfy:number>21560638</sfy:number>
+    <sfy:number>16844048</sfy:number>
+    <sfy:number>13566089</sfy:number>
+    <sfy:number>153191222</sfy:number>
+    <sfy:number>63338847</sfy:number>
+    <sfy:number>10291769</sfy:number>   
+</rdf:Description>
+
 </rdf:RDF>
