@@ -118,6 +118,9 @@
 	$latitude = $rdf_map['lat'];
 	$longtitude = $rdf_map['long'];
 	$name = $rdf_map['name'];
+	$namaa = $rdf_name['nama'];
+	$tanggallahirr = $rdf_name['tanggallahir'];
+	$tahunaktif = $rdf_name['ta'];
 	$description = $dbpedia['description'];
 	$birthname = $dbpedia['birthName'];
 	$birthdate = $dbpedia['birthDate']
@@ -140,7 +143,7 @@
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/style-color.css" rel="stylesheet">		
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="img/logo/favicon.ico">
+		<link rel="shortcut icon" href="img/logo/icon.jpg">
 		<!--CSS dan Javascript Leaflet JS-->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
 		<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
@@ -154,7 +157,7 @@
 	<style type="text/css">
 		body { font-family: sans-serif; }
 		dt { font-weight: bold; }
-		.image { float: right; margin: 15px; max-width: 200px}
+		.image { float: right; margin: 15px; max-width: 50vh}
 	</style>
 	</head>	
 	<body>
@@ -231,12 +234,13 @@
 					<!-- hero content -->
 					<div class="hero-content ">
 						<!-- heading -->
-						<h2><?= $birthname ?></h2>
+						<h2>Tugas Web Semantik</h2>
 						<hr>
 						<!-- paragraph -->
 						<!-- aku mau ambil nama depan, sm belakang dri file rdf, gimanaaa?? -->
-						<h4>Nama Depan : <?php ('foaf:givenName')?> </h4> 
-						<h4>Nama Belakang : <?= ('foaf:familyName')?> </h4>
+						<h4>Nama : <?=$birthname?> </h4> 
+						<h4>Tahun Aktif : <?= $tahunaktif ?> </h4>
+						<h4>Tanggal Lahir : <?= $tanggallahirr ?></h4>
 						<p><?= $description ?></p>
 					</div>
 					<!-- hero play list -->
@@ -276,24 +280,22 @@
 											</div>
 											<div class="clearfix"></div>
 										</li>
-										<li class="playlist-number">
-											<!-- song information -->
+										<!-- <li class="playlist-number">
 											<div class="song-info">
 											<div class="col-9">
 												<dl>
-													<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd>
-													<dt>Title:</dt> <dd><?= $doc->title ?></dd>
-													<dt>Description:</dt> <dd><?= $doc->description ?></dd>
+													<dt>Page:</dt> <dd><?= link_to($lol->url) ?></dd>
+													<dt>Title:</dt> <dd><?= $lol->title ?></dd>
+													<dt>Description:</dt> <dd><?= $lol->description ?></dd>
 												</dl>
 												</div>
 											</div>
-											<!-- music icon -->
 											<div class="music-icon">
 												<a href="#"><i class="fa fa-play"></i></a>
 												<a href="#"><i class="fa fa-pause"></i></a>
 											</div>
 											<div class="clearfix"></div>
-										</li>
+										</li> -->
 									</ul>
 								</div>
 							</div>
@@ -436,26 +438,6 @@
 				</div>
 			</div>
 			<!-- features end -->
-			
-			<!-- call to action -->
-			<div class="cta parallax-one pad">
-				<div class="container">
-					<!-- cta element -->
-					<div class="cta-element ">
-						<div class="row">
-							<div class="col-md-9 col-sm-8">
-								<!-- heading -->
-								<h3>Melodi, A Fully Rock Album Pro</h3>
-								<!-- paragraph -->
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim sectetur adipiscing elit, sed do eiusmod tempoad minim veniam consequat.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ cta end -->
-			
-			
 			<!-- news letter -->
 			<div class="news-letter">
 				<div class="container">
