@@ -9,11 +9,11 @@
     xmlns:dbp="http://dbpedia.org/property/"
     xmlns:dc="http://purl.org/dc/elements/1.1/">
   
-  <foaf:profile rdf:about="http://localhost/Tulus/tulus.rdf">
-      <rdfs:label>Tulus</rdfs:label>
-      <foaf:maker rdf:resource="http://localhost/Tulus/"/>
-      <foaf:primaryTopic rdf:resource="http://localhost/Tulus/"/>
-  </foaf:profile>
+  <foaf:PersonalProfileDocument rdf:about="http://localhost/TubesWS_kel5/tulus.rdf">
+    <rdfs:label>Tulus</rdfs:label>
+    <foaf:maker rdf:resource="http://localhost/TubesWS_kel5/"/>
+    <foaf:primaryTopic rdf:resource="http://localhost/TubesWS_kel5/"/>
+</foaf:PersonalProfileDocument>
 
   <!--RDF Bagian Map-->
   <rdf:Description rdf:about="https://dbpedia.org/page/Bukittinggi">
@@ -22,22 +22,29 @@
       <geo:long>100.369164</geo:long>
   </rdf:Description>
   
-  <foaf:Person rdf:about="http://localhost/Tulus/">
-    <foaf:title>Mr</foaf:title>
-    <foaf:givenName>Muhammad</foaf:givenName>
+  <!-- RDF Tentang Tulus -->
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Tulus_(singer)">
+    <dbp:birthName> Muhammad Tulus </dbp:birthName>
+    <dbp:birthDate> 1987-08-20 </dbp:birthDate>
+    <dbp:name> Tulus</dbp:name>
+    <dbp:yearsActive>2011</dbp:yearsActive>
+    <foaf:homepage rdf:resource="https://www.imdb.com/title/tt19119528/"/>
+</rdf:Description>
+
+  <!-- <foaf:Person rdf:about="http://localhost/Tulus/"> -->
+    <!-- <foaf:name>Muhammad</foaf:name>
     <foaf:familyName>Tulus</foaf:familyName>
     <owl:sameAs>
         <foaf:Person rdf:about="http://dbpedia.org/resource/Tulus_(singer)">
             <rdfs:label>Tulus</rdfs:label>
             <foaf:homepage rdf:resource="http://dbpedia.org/resource/Tulus_(singer)"/>
         </foaf:Person>
-    </owl:sameAs>
+    </owl:sameAs> -->
 
-    <foaf:pastProject>
-        <foaf:Project rdf:about="https://dbpedia.org/page/Tulus_(album)">
-            <foaf:homepage rdf:resource="https://www.imdb.com/title/tt19119528/"/>
-            <foaf:name>Tulus : Labirin</foaf:name>
+    <rdf:Description rdf:about="https://dbpedia.org/page/Tulus_(album)">
+        <dbp:artist rdf:resource="https://www.imdb.com/title/tt19119528/">
+        <dbp:name>Tulus : Labirin</dbp:name>
         </foaf:Project>
-    </foaf:pastProject>
-  </foaf:Person>
+    </rdf:Description>
+  <!-- </foaf:Person> -->
 </rdf:RDF>

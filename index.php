@@ -66,6 +66,24 @@
 			'name' => $row->name,
 		];
 	}
+
+	// query manggil rdf
+	$sparql_query_name = 'SELECT ?nama ?tanggallahir ?ta WHERE {
+		?subject dbp:birthName ?nama;
+		dbp:birthDate ?tanggallahir;
+		dbp:yearsActive ?ta.
+	} ';
+
+	$result_rdf_name = $sparql_jena->query($sparql_query_name);
+	$rdf_name = [];
+	foreach ($result_rdf_name as $row)
+	{
+		$rdf_name = [
+			'nama' => $row->nama,
+			'tanggallahir' => $row->tanggallahir,
+			'ta' => $row->ta,
+		];
+	}
 ?>
 
 <!--Titik Koordinat Open Street Map-->
@@ -73,6 +91,9 @@
 	$latitude = $rdf_map['lat'];
 	$longtitude = $rdf_map['long'];
 	$name = $rdf_map['name'];
+	$namaa = $rdf_name['nama'];
+	$tanggallahirr = $rdf_name['tanggallahir'];
+	$tahunaktif = $rdf_name['ta'];
 	$description = $dbpedia['description'];
 	$birthname = $dbpedia['birthName'];
 	$birthdate = $dbpedia['birthDate']
@@ -96,7 +117,7 @@
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/style-color.css" rel="stylesheet">		
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="img/logo/favicon.ico">
+		<link rel="shortcut icon" href="img/logo/icon.jpg">
 		<!--CSS dan Javascript Leaflet JS-->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
 		<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
@@ -104,7 +125,7 @@
 	<style type="text/css">
 		body { font-family: sans-serif; }
 		dt { font-weight: bold; }
-		.image { float: right; margin: 15px; max-width: 200px}
+		.image { float: right; margin: 15px; max-width: 50vh}
 	</style>
 	</head>	
 	<body>
@@ -147,25 +168,14 @@
 								<!-- banner caption -->
 								<div class="carousel-caption slide-one">
 									<!-- heading -->
-									<h2 class="animated fadeInLeftBig">Melodi For You!</h2>
+									<h2 class="animated fadeInLeftBig"> Tulus </h2>
 									<!-- paragraph -->
-									<h3 class="animated fadeInRightBig">Find More Innovative &amp; Creative Music Albums.</h3>
+									<!-- <h3 class="animated fadeInRightBig"> About Tulus </h3> -->
 								</div>
 							</div>
 						</div>
 						<div class="item">
-							<img src="img/banner/tulus2.jpg" alt="...">
-							<div class="container">
-								<!-- banner caption -->
-								<div class="carousel-caption slide-two">
-									<!-- heading -->
-									<h2 class="animated fadeInLeftBig"><i class="fa fa-headphones"></i> Listen It...</h2>
-									<!-- paragraph -->
-									<h3 class="animated fadeInRightBig">Lorem ipsum dolor sit amet, consectetur elit.</h3>
-									<!-- button -->
-									<a href="#" class="animated fadeIn btn btn-theme">Listen Now</a>
-								</div>
-							</div>
+							<img src="img/banner/tulus2.jpg" style="width:300vh;" alt="...">
 						</div>
 					</div>
 
@@ -189,12 +199,13 @@
 					<!-- hero content -->
 					<div class="hero-content ">
 						<!-- heading -->
-						<h2><?= $birthname ?></h2>
+						<h2>Tugas Web Semantik</h2>
 						<hr>
 						<!-- paragraph -->
 						<!-- aku mau ambil nama depan, sm belakang dri file rdf, gimanaaa?? -->
-						<h4>Nama Depan : <?php ('foaf:givenName')?> </h4> 
-						<h4>Nama Belakang : <?= ('foaf:familyName')?> </h4>
+						<h4>Nama : <?=$birthname?> </h4> 
+						<h4>Tahun Aktif : <?= $tahunaktif ?> </h4>
+						<h4>Tanggal Lahir : <?= $tanggallahirr ?></h4>
 						<p><?= $description ?></p>
 					</div>
 					<!-- hero play list -->
@@ -202,16 +213,16 @@
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<!-- music album image -->
-								<div class="figure">
-									<!-- image -->
-									
-									<img class="img-responsive" <?php
+								<div class="figure"><?php
 										$doc = \EasyRdf\Graph::newAndLoad('https://dbpedia.org/page/Tulus_(singer)');
 										if ($doc->image) {
 										echo content_tag('img', null, array('src'=>$doc->image, 'class'=>'image'));
-										} ?>
-
-									
+										} 
+										// $lol = \EasyRdf\Graph::newAndLoad('https://id.wikipedia.org/wiki/Tulus_(penyanyi)');
+										// if ($lol->image) {
+										// echo content_tag('img', null, array('src'=>$lol->image, 'class'=>'image'));
+										// }
+										?>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6">
@@ -236,24 +247,22 @@
 											</div>
 											<div class="clearfix"></div>
 										</li>
-										<li class="playlist-number">
-											<!-- song information -->
+										<!-- <li class="playlist-number">
 											<div class="song-info">
 											<div class="col-9">
 												<dl>
-													<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd>
-													<dt>Title:</dt> <dd><?= $doc->title ?></dd>
-													<dt>Description:</dt> <dd><?= $doc->description ?></dd>
+													<dt>Page:</dt> <dd><?= link_to($lol->url) ?></dd>
+													<dt>Title:</dt> <dd><?= $lol->title ?></dd>
+													<dt>Description:</dt> <dd><?= $lol->description ?></dd>
 												</dl>
 												</div>
 											</div>
-											<!-- music icon -->
 											<div class="music-icon">
 												<a href="#"><i class="fa fa-play"></i></a>
 												<a href="#"><i class="fa fa-pause"></i></a>
 											</div>
 											<div class="clearfix"></div>
-										</li>
+										</li> -->
 									</ul>
 								</div>
 							</div>
@@ -351,26 +360,6 @@
 				</div>
 			</div>
 			<!-- features end -->
-			
-			<!-- call to action -->
-			<div class="cta parallax-one pad">
-				<div class="container">
-					<!-- cta element -->
-					<div class="cta-element ">
-						<div class="row">
-							<div class="col-md-9 col-sm-8">
-								<!-- heading -->
-								<h3>Melodi, A Fully Rock Album Pro</h3>
-								<!-- paragraph -->
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim sectetur adipiscing elit, sed do eiusmod tempoad minim veniam consequat.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ cta end -->
-			
-			
 			<!-- news letter -->
 			<div class="news-letter">
 				<div class="container">
