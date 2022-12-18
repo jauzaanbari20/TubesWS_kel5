@@ -3,7 +3,6 @@
 	require_once __DIR__."/html_tag_helpers.php";
 	$sparql_endpoint = 'https://dbpedia.org/sparql';
 
-	// Jangan Lupa Buat Dataset Baru ya di Jena Fuseki, Nama Dataset-nya Tulus //
 	$sparql_dbpedia = new \EasyRdf\Sparql\Client($sparql_endpoint);
 	$sparql_jena = new \EasyRdf\Sparql\Client('http://localhost:3030/Tulus/query');
 
@@ -14,17 +13,15 @@
 	\EasyRdf\RdfNamespace::set('owl', 'http://www.w3.org/2002/07/owl#');
 	\EasyRdf\RdfNamespace::set('geo', 'http://www.opengis.net/ont/geosparql#');
 	\EasyRdf\RdfNamespace::set('dbp', 'http://dbpedia.org/property/');
-	\EasyRdf\RdfNamespace::set('dc', 'http://purl.org/dc/elements/1.1/');
 	\EasyRdf\RdfNamespace::set('sfy', 'https://open.spotify.com/');
 	\EasyRDf\RdfNamespace::setDefault('og');
 
-	// Query Ambil Data dari DBPedia, Tinggal Tambahin aja Predikat ama Hasil yang Mau Diambil //
+	// Query Ambil Data dari DBPedia //
 	$query_dbpedia = "
         SELECT * WHERE {
         ?tulus rdfs:label 'Tulus (singer)'@en.
 		?tulus dbo:abstract ?description.
         ?tulus dbo:birthName ?birthName.
-        ?tulus dbo:birthDate ?birthDate.
         FILTER( LANG (?description) = 'en')
     }";
 	$result_dbpedia = $sparql_dbpedia->query($query_dbpedia);
@@ -34,7 +31,6 @@
 		$dbpedia = [
 			'description' => $row->description,
 			'birthName' => $row->birthName,
-			'birthDate' => $row->birthDate,
 		];
 		break;
 	}
@@ -101,8 +97,7 @@
 
 	// Query Untuk Memanggil Data dari RDF //
 	$sparql_query = 'SELECT ?nama ?tanggallahir ?ta WHERE {
-		?subject dbp:birthName ?nama;
-		dbp:birthDate ?tanggallahir;
+		?subject dbp:birthDate ?tanggallahir;
 		dbp:yearsActive ?ta.
 	} ';
 	$result_rdf = $sparql_jena->query($sparql_query);
@@ -110,7 +105,6 @@
 	foreach ($result_rdf as $row)
 	{
 		$rdf = [
-			'nama' => $row->nama,
 			'tanggallahir' => $row->tanggallahir,
 			'ta' => $row->ta,
 		];
@@ -124,12 +118,10 @@
 	$latitude = $rdf_map['lat'];
 	$longtitude = $rdf_map['long'];
 	$name = $rdf_map['name'];
-	$nama = $rdf['nama'];
 	$tanggallahirr = $rdf['tanggallahir'];
 	$tahunaktif = $rdf['ta'];
 	$description = $dbpedia['description'];
 	$birthname = $dbpedia['birthName'];
-	$birthdate = $dbpedia['birthDate']
 ?>
 
 <!DOCTYPE html>
@@ -215,25 +207,26 @@
 				</div>
 				<div class="hero-playlist">
 					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<div class="figure"><img class="img-responsive"> <?php
+						<div class="col-md-6 col-sm-6"> 
+							<?php
 								$doc = \EasyRdf\Graph::newAndLoad('https://dbpedia.org/page/Tulus_(singer)');
 								if ($doc->image) {
 									echo content_tag('img', null, array('src'=>$doc->image, 'class'=>'image'));
-								} ?>
-							</div>
+								} 
+							?>
 						</div>
-						<div class="col-md-6 col-sm-6">
-							<div class="playlist-content">
+						<div class="col-md-6 col-sm-6" style="margin-top: 18px;">
+							<div class="playlist-content" style="width: 350px;">
 								<ul class="list-unstyled">
 									<li class="playlist-number">
 										<div class="song-info">
 										<div class="col-9">
 											<dl>
-												<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd>
-												<dt>Name:</dt> <dd><?= $birthname?></dd>
-												<dt>Year Active:</dt> <dd><?= $tahunaktif?></dd>
-												<dt>Name:</dt> <dd><?= $tanggallahirr?></dd>
+												<br>
+												<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd><br>
+												<dt>Name:</dt> <dd><?= $birthname?></dd><br>
+												<dt>Year Active:</dt> <dd><?= $tahunaktif?></dd><br>
+												<dt>Name:</dt> <dd><?= $tanggallahirr?></dd><br>
 												<dt>Title:</dt> <dd><?= $doc->title ?></dd>
 											</dl>
 										</div>
@@ -254,12 +247,12 @@
 			<br>
 			<h3 align="center"><?=$name?></h3>
 		</div>
-		<div id="map" style="height:100vh; width:150vh; margin:0 auto"></div>
+		<div id="map" style="height:100vh; width:180vh; margin:0 auto"></div>
 
 		<!-- Bagian Google Chart -->
 		<div class="featured pad" id="discography">
 			<div class="default-heading">
-				<h2>DISCOGRAPHY</h2>
+				<h2>Tulus' Discography</h2>
 				<br>
 				<h3 align="center">Album Manusia</h3>
 			</div>
@@ -270,7 +263,7 @@
 			<div class="container">
 				<div class="news-content ">
 					<h3>Thank You</h3>
-					<p><strong>Thank You For Your Attention</strong>, And Sorry If There Is A Error, And Let Us Know If You Have Any Questions.</p>
+					<p><strong>Thank You For Your Attention</strong>. Sorry If There Is A Error, And Let Us Know If You Have Any Questions.</p>
 				</div>
 			</div>
 		</div>
