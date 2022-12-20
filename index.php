@@ -226,7 +226,7 @@
 												<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd><br>
 												<dt>Name:</dt> <dd><?= $birthname?></dd><br>
 												<dt>Year Active:</dt> <dd><?= $tahunaktif?></dd><br>
-												<dt>Name:</dt> <dd><?= $tanggallahirr?></dd><br>
+												<dt>Birth Date:</dt> <dd><?= $tanggallahirr?></dd><br>
 												<dt>Title:</dt> <dd><?= $doc->title ?></dd>
 											</dl>
 										</div>
