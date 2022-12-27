@@ -33,6 +33,24 @@
 		];
 		break;
 	}
+
+	$query_dbpedia1 = 'SELECT * WHERE {
+        ?tulus rdfs:label "Tulus (singer)"@en.
+		?tulus dbo:birthYear ?a.
+		?tulus dbo:activeYearsStartYear ?b.
+		bind(year(now()) - year(?a) as ?umur).
+		bind(year(now()) - year(?b) as ?lamaaktif).
+    }';
+	$result_dbpedia1 = $sparql_dbpedia->query($query_dbpedia1);
+	$dbpedia1 = [];
+	foreach ($result_dbpedia1 as $row)
+	{
+		$dbpedia1 = [
+			'umur' => $row->umur,
+			'lamaaktif' => $row->lamaaktif,
+		];
+		break;
+	}
 	
 	// Query Untuk Mengambil Koordinat Map //
 	$sparql_query_map = 'SELECT ?lat ?long ?name WHERE {
@@ -93,23 +111,23 @@
 			'SatuKali'          =>  $row->SatuKali,
 		];
 	}
-	//Query Menghitung Total Pendengar
+
+	//Query Menghitung Total Pendengar //
 	$sparql_query_totalListener = 'SELECT (SUM(?number) as ?TotalListener)
 	WHERE
 	{
-	  VALUES (?number) {
-		(18255652)
-		(10385435)
-		(9781211)
-		(54398256)
-		(21560638)
-		(16844048)
-		(13566089)
-		(153191222)
-		(63338847)
-		(10291769)
-			 
-	  }
+		VALUES (?number) {
+			(18255652)
+			(10385435)
+			(9781211)
+			(54398256)
+			(21560638)
+			(16844048)
+			(13566089)
+			(153191222)
+			(63338847)
+			(10291769)			 
+		}
 	}';
 	$result_totalListener = $sparql_jena->query($sparql_query_totalListener);
 	$rdf_total_pendengar = [];
@@ -133,26 +151,6 @@
 			'tanggallahir' => $row->tanggallahir,
 			'ta' => $row->ta,
 		];
-	}
-
-	$query_dbpedia1 = 'SELECT * WHERE {
-        ?tulus rdfs:label "Tulus (singer)"@en.
-		?tulus dbo:birthYear ?a.
-		?tulus dbo:activeYearsStartYear ?b.
-		bind(year(now()) - year(?a) as ?umur).
-		bind(year(now()) - year(?b) as ?lamaaktif).
-
-       
-    }';
-	$result_dbpedia1 = $sparql_dbpedia->query($query_dbpedia1);
-	$dbpedia1 = [];
-	foreach ($result_dbpedia1 as $row)
-	{
-		$dbpedia1 = [
-			'umur' => $row->umur,
-			'lamaaktif' => $row->lamaaktif,
-		];
-		break;
 	}
 
 ?>
@@ -254,7 +252,7 @@
 				</div>
 				<div class="hero-playlist">
 					<div class="row">
-						<div class="col-md-6 col-sm-6"> 
+						<div class="col-md-6 col-sm-6" style="margin-top: 40px;"> 
 							<?php
 								$doc = \EasyRdf\Graph::newAndLoad('https://dbpedia.org/page/Tulus_(singer)');
 								if ($doc->image) {
@@ -262,7 +260,7 @@
 								} 
 							?>
 						</div>
-						<div class="col-md-6 col-sm-6" style="margin-top: 18px;">
+						<div class="col-md-6 col-sm-6">
 							<div class="playlist-content" style="width: 350px;">
 								<ul class="list-unstyled">
 									<li class="playlist-number">
@@ -273,9 +271,9 @@
 												<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd><br>
 												<dt>Name:</dt> <dd><?= $birthname?></dd><br>
 												<dt>Start Active:</dt> <dd><?= $tahunaktif ?></dd><br>
-												<dt>Years Active:</dt> <dd><?= $lamaaktif?> tahun </dd><br>
+												<dt>Years Active:</dt> <dd><?= $lamaaktif?> Years </dd><br>
 												<dt>Birth Date:</dt> <dd><?= $tanggallahirr?></dd><br>
-												<dt>Age:</dt> <dd><?= $umur?> tahun</dd><br>
+												<dt>Age:</dt> <dd><?= $umur?> Years Old</dd><br>
 												<dt>Title:</dt> <dd><?= $doc->title ?></dd><br>
 											</dl>
 										</div>
@@ -307,13 +305,11 @@
 			</div>
 			<div id="chart" style="width: 150vh; height: 100vh; margin:0 auto"></div>
 			<br><br>
-			<div class="container">
-  			<div class="row justify-content-md-center">
-    		<div class="col col-lg-9">
-				
-			<p style="font-size:x-large">Album Tulus 'Manusia' telah diputar sebanyak <b><?= $rdf_total_pendengar['total'] ?></b> kali di <i>Spotify</i></p>
-    		</div>
-
+			<div class="container" style="position: center;">
+  				<div class="row justify-content-md-center">
+    				<div class="col col-lg-9" style="margin-left: 200px;">
+						<p style="font-size:x-large">This Album Has Been Played With Total <b><?= $rdf_total_pendengar['total'] ?></b> Listener In <i>Spotify</i></p>
+    				</div>
 				</div>
 			</div>
 		</div>
