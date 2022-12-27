@@ -135,6 +135,26 @@
 		];
 	}
 
+	$query_dbpedia1 = 'SELECT * WHERE {
+        ?tulus rdfs:label "Tulus (singer)"@en.
+		?tulus dbo:birthYear ?a.
+		?tulus dbo:activeYearsStartYear ?b.
+		bind(year(now()) - year(?a) as ?umur).
+		bind(year(now()) - year(?b) as ?lamaaktif).
+
+       
+    }';
+	$result_dbpedia1 = $sparql_dbpedia->query($query_dbpedia1);
+	$dbpedia1 = [];
+	foreach ($result_dbpedia1 as $row)
+	{
+		$dbpedia1 = [
+			'umur' => $row->umur,
+			'lamaaktif' => $row->lamaaktif,
+		];
+		break;
+	}
+
 ?>
 
 
@@ -147,6 +167,8 @@
 	$tahunaktif = $rdf['ta'];
 	$description = $dbpedia['description'];
 	$birthname = $dbpedia['birthName'];
+	$umur = $dbpedia1['umur'];
+	$lamaaktif = $dbpedia1['lamaaktif'];
 ?>
 
 <!DOCTYPE html>
@@ -250,9 +272,11 @@
 												<br>
 												<dt>Page:</dt> <dd><?= link_to($doc->url) ?></dd><br>
 												<dt>Name:</dt> <dd><?= $birthname?></dd><br>
-												<dt>Year Active:</dt> <dd><?= $tahunaktif?></dd><br>
+												<dt>Start Active:</dt> <dd><?= $tahunaktif ?></dd><br>
+												<dt>Years Active:</dt> <dd><?= $lamaaktif?> tahun </dd><br>
 												<dt>Birth Date:</dt> <dd><?= $tanggallahirr?></dd><br>
-												<dt>Title:</dt> <dd><?= $doc->title ?></dd>
+												<dt>Age:</dt> <dd><?= $umur?> tahun</dd><br>
+												<dt>Title:</dt> <dd><?= $doc->title ?></dd><br>
 											</dl>
 										</div>
 										</div>

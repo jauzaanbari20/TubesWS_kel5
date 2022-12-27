@@ -6,7 +6,8 @@
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
     xmlns:geo="http://www.opengis.net/ont/geosparql#"
     xmlns:dbp="http://dbpedia.org/property/"
-    xmlns:sfy="https://open.spotify.com/">
+    xmlns:sfy="https://open.spotify.com/"
+
   
     <foaf:PersonalProfileDocument rdf:about="http://localhost/TubesWS_kel5/tulus.rdf">
         <rdfs:label>Tulus</rdfs:label>
