@@ -94,6 +94,32 @@
 			'SatuKali'          =>  $row->SatuKali,
 		];
 	}
+	//Query Menghitung Total Pendengar
+	$sparql_query_totalListener = 'SELECT (SUM(?number) as ?TotalListener)
+	WHERE
+	{
+	  VALUES (?number) {
+		(18255652)
+		(10385435)
+		(9781211)
+		(54398256)
+		(21560638)
+		(16844048)
+		(13566089)
+		(153191222)
+		(63338847)
+		(10291769)
+			 
+	  }
+	}';
+	$result_totalListener = $sparql_jena->query($sparql_query_totalListener);
+	$rdf_total_pendengar = [];
+	foreach ($result_totalListener as $row)
+	{
+		$rdf_total_pendengar = [
+			'total' => $row->TotalListener
+		];
+	}
 
 	// Query Untuk Memanggil Data dari RDF //
 	$sparql_query = 'SELECT ?nama ?tanggallahir ?ta WHERE {
@@ -257,8 +283,18 @@
 				<h3 align="center">Album Manusia</h3>
 			</div>
 			<div id="chart" style="width: 150vh; height: 100vh; margin:0 auto"></div>
-		</div>
+			<br><br>
+			<div class="container">
+  			<div class="row justify-content-md-center">
+    		<div class="col col-lg-9">
+				
+			<p style="font-size:x-large">Album Tulus 'Manusia' telah diputar sebanyak <b><?= $rdf_total_pendengar['total'] ?></b> kali di <i>Spotify</i></p>
+    		</div>
 
+				</div>
+			</div>
+		</div>
+		</div>
 		<div class="news-letter">
 			<div class="container">
 				<div class="news-content ">
@@ -313,7 +349,7 @@
 				legend: { position: 'none' },
 				chart: {
 					title: 'Total Player on Spotify Album Manusia',
-					subtitle: 'By: Tulus' },
+					subtitle: 'By: Tulus'},
 				axes: {
 					x: {
 					0: { side: 'top', label: 'Album Manusia'} // Top x-axis.
@@ -325,7 +361,7 @@
 				chart.draw(data, google.charts.Bar.convertOptions(options));
 			};
 		</script>
-
+	
 		<!-- Script Untuk HTML -->
 		<script src="js/jquery.js"></script>
 		<script src="js/bootstrap.min.js"></script>
