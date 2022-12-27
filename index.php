@@ -10,7 +10,6 @@
 	\EasyRdf\RdfNamespace::set('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
 	\EasyRdf\RdfNamespace::set('foaf', 'http://xmlns.com/foaf/0.1/');
 	\EasyRdf\RdfNamespace::set('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
-	\EasyRdf\RdfNamespace::set('owl', 'http://www.w3.org/2002/07/owl#');
 	\EasyRdf\RdfNamespace::set('geo', 'http://www.opengis.net/ont/geosparql#');
 	\EasyRdf\RdfNamespace::set('dbp', 'http://dbpedia.org/property/');
 	\EasyRdf\RdfNamespace::set('sfy', 'https://open.spotify.com/');
@@ -181,8 +180,8 @@
 						<img src="img/banner/tulus3.png" alt="...">
 						<div class="container">
 							<div class="carousel-caption slide-two">
-								<h2 class="animated fadeInLeftBig"><i class="fas fa-music"></i> Tulus</h2>
-								<h3 class="animated fadeInRightBig">Check The Infomation About Him Below</h3>
+								<h2 class="animated fadeInLeftBig" style="color: black;"><i class="fas fa-music"></i> Tulus</h2>
+								<h3 class="animated fadeInRightBig" style="color: black;">Check The Infomation About Him Below</h3>
 								<a href="#websemantik" class="animated fadeIn btn btn-theme">Biography</a>
 							</div>
 						</div>
